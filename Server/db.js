@@ -1,6 +1,7 @@
 "use strict";
 
 const data = require("./data.js");
+const reducer = require("./reducer.js");
 
 function Calc(opt){
     var result = null;
@@ -48,10 +49,12 @@ function GroupRecursive(groupBy, tuples, opt){
 
         var result = groups.map(gr=>{
             let filtered = tuples.filter(t=>t[groupBy[0].selector]===gr);
-            let summary = filtered
-                .map(t=>t[opt.groupSummary[0].selector])
-                .reduce((acc,i)=>acc+i,0);
-            return {key:gr, items:GroupRecursive(groupBy.slice(1), filtered, opt), summary: [summary], count: filtered.length};
+            let summary = opt.groupSummary.map(
+                grsum => reducer[grsum.summaryType](
+                    filtered.map(t=>t[grsum.selector])
+                )
+            );
+            return {key:gr, items:GroupRecursive(groupBy.slice(1), filtered, opt), summary: summary, count: filtered.length};
         });
 
         return result;
@@ -72,6 +75,7 @@ function FilterL2(tuples, filters){
     let result = FilterL1(tuples, filters[0]);
 
     let opReg = null;
+    let prevFilter = JSON.stringify(filters[0]);
     for(let theFilter of filters.slice(1))
     {
         if(typeof(theFilter) === "string")
@@ -81,6 +85,8 @@ function FilterL2(tuples, filters){
         }
         else
         {
+            if(prevFilter === JSON.stringify(theFilter))
+                continue;// DevExtreme часто пресылает в таком виде: [["ShipCountry", "=", "Brazil"], "or", ["ShipCountry", "=", "Brazil"]]
             if(opReg === null)
                 throw new Error(`Invalid opReg ${opReg}`);
             if(opReg === "or")
