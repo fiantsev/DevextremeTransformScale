@@ -108,12 +108,12 @@ var pivotDS = new DevExpress.data.PivotGridDataSource(pivotDSConfig);
 $("#table").resizable({ handles: "n, e, s, w, ne, se, sw, nw", resize: function(){ pivot.updateDimensions(); } });
 
 var pivot = $("#content").dxPivotGrid({
-    // stateStoring: {
-    //     enabled: true,
-    //     type: "localStorage",
-    //     storageKey: "pivotgrid"
-    // },
-    rowHeaderLayout: "tree",
+    stateStoring: {
+        enabled: true,
+        type: "localStorage",
+        storageKey: "pivotgrid"
+    },
+    // rowHeaderLayout: "tree",
     wordWrapEnabled: false,
     showRowGrandTotals: false,
     showColumnGrandTotals: false,
