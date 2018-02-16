@@ -4,9 +4,9 @@ const PORT = 3333;
 
 
 const http = require("http");
+const fs = require("fs");
 
 const db = require("./db.js");
-
 
 http.createServer((request,response)=>{
     return Promise.resolve()
@@ -14,8 +14,11 @@ http.createServer((request,response)=>{
         .then(() => ParseBody(request))
         .then((opt) => {console.log(`\t${JSON.stringify(opt)}`); return opt;})
         .then((opt) => db.Calc(opt))
-        .then((res) => {console.log(`\tcount: ${res.length}`); return res;})
-        .then((res) => response.end(JSON.stringify(res, null, " ")))
+        .then((res) => {console.log(`\t${res.data?"items":"tuples"}: ${res.data?res.data.length:res.length}`); return res;})
+        .then((res) => {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.end(JSON.stringify(res, null, " "));
+        })
         .catch((error) => console.error(error) && response.statusCode(500).end());
 }).listen(PORT, ()=>{
     console.log("PORT", PORT);

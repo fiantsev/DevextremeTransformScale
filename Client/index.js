@@ -1,28 +1,50 @@
 "use strict";
-var DATA = require("./data.js");
+
+var store = new DevExpress.data.CustomStore({
+    key: "OrderID",
+    load: function(opt){
+        var d = $.Deferred();
+        fetch("http://localhost:3333/api", {method:"POST", body: JSON.stringify(opt)})
+            .then((r) => r.json() )
+            .then((r) => {
+                // var _r = r.data?[r.data, r.summary]:r;
+                // console.log(_r);
+                if(r.data)
+                    return d.resolve(r.data, { summary: r.summary });
+                else
+                    return d.resolve(r);
+            });
+
+        return d.promise();
+    }
+});
 
 var pivotDSConfig = {
+    // retrieveFields: true,
     remoteOperations: true,
-    
-    store: DATA.customStore,
+    store: store,
+    // store: DATA.customStore,
     fields:[
-        {caption: "OCCUPATION", dataField:"occupation", area:"row"},
-        {caption: "SERNAME", dataField:"sername", area:"row"},
-        {caption: "NAME", dataField:"name", area:"row"},
-        {caption: "COUNTRY", dataField:"country", area:"column"},
-        {caption: "CITY", dataField:"city", area:"column"},
-        {caption: "EXPERIENCE", dataField:"experience", dataType: "number", area:"data", summaryType:"sum"},
-        {caption: "AGE", dataField:"age", dataType: "number", summaryType:"sum"},
-        {caption: "SEX", dataField:"sex", dataType: "string"},
+        { dataField: "ShipCountry", area: "row" },
+        { dataField: "ShipCity", area: "row" },
+        { dataField: "ShipPostalCode", area: "row" },
+        { dataField: "SalesAmount", caption: "Sale Amount", format: { type: "currency", presicion: 2 }, summaryType: "sum", area: "data" }
     ],
 };
 var pivotDS = new DevExpress.data.PivotGridDataSource(pivotDSConfig);
-DATA.store.on("modified", ()=>pivotDS.reload());
+// DATA.store.on("modified", ()=>pivotDS.reload());
 // pivotDS.filter("name", "=", "sername")
 
 $("#table").resizable({ handles: "n, e, s, w, ne, se, sw, nw", resize: function(){ pivot.updateDimensions(); } });
 
 var pivot = $("#content").dxPivotGrid({
+    // stateStoring: {
+    //     enabled: true,
+    //     type: "localStorage",
+    //     storageKey: "pivotgrid"
+    // },
+    rowHeaderLayout: "tree",
+    wordWrapEnabled: false,
     showRowGrandTotals: false,
     showColumnGrandTotals: false,
     showRowTotals: false,
@@ -31,9 +53,7 @@ var pivot = $("#content").dxPivotGrid({
 }).dxPivotGrid("instance");
 
 //********************************************************/
-window.data = DATA.data;
-window.store = DATA.store;
-window.customStore = DATA.customStore;
 window.log = console.log;
 window.pivotDS = pivotDS;
 window.pivot = pivot;
+window.store = store;
