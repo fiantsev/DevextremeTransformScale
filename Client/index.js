@@ -4,7 +4,8 @@ var store = new DevExpress.data.CustomStore({
     key: "OrderID",
     load: function(opt){
         var d = $.Deferred();
-        fetch("http://localhost:3333/api", {method:"POST", body: JSON.stringify(opt)})
+        var url = `http://${window.location.hostname}:3333/api`;
+        fetch(url, {method:"POST", body: JSON.stringify(opt)})
             .then((r) => r.json() )
             .then((r) => {
                 // var _r = r.data?[r.data, r.summary]:r;
