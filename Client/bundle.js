@@ -78,8 +78,6 @@ var store = new DevExpress.data.CustomStore({
         fetch(url, {method:"POST", body: JSON.stringify(opt)})
             .then((r) => r.json() )
             .then((r) => {
-                // var _r = r.data?[r.data, r.summary]:r;
-                // console.log(_r);
                 if(r.data)
                     return d.resolve(r.data, { summary: r.summary });
                 else
