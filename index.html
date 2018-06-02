@@ -16,7 +16,24 @@
 <body>
 
     <div class="cp">
-        <div class="button">Update Dimensions</div>
+        <div class="row">ControlPanel</div>
+        <div class="row">
+                <span class="info" id="scaleInfo"></span>
+                <span class="info" id="dashboardInfo"></span>
+                <span class="info" id="containerInfo"></span>
+                <span class="info" id="pivotInfo"></span>
+        </div>
+        <div class="row">
+            <input type="number" id="delta" placeholder="delta" value="50">
+            <input type="number" id="step" placeholder="step" value="1">
+            <input type="number" id="scale" placeholder="scale" value="1000" onchange="ForceScale()">
+
+            <div class="button" id="startButton">Start</div>
+            <div class="button" id="stopButton">Stop</div>
+            <div class="button" id="reverseButton">Reverse</div>
+            <div class="button" id="resetButton">Reset Scene</div>
+            <div class="button" id="updateDimensionsButton">Update Dimensions</div>
+        </div>
     </div>
     
 

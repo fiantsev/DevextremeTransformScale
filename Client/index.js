@@ -67,6 +67,10 @@ var pivot = $("#pivot").dxPivotGrid({
     showRowTotals: false,
     showColumnTotals: false,
     dataSource: pivotDS,
+    allowExpandAll: true,
+    onContentReady: function(){
+        window.setTimeout(UpdateInfo);
+    }
 }).dxPivotGrid("instance");
 
 //********************************************************/

@@ -4,11 +4,13 @@
 }
 #dashboard
 {
-    border:2px solid royalblue;
+    /* border:2px solid royalblue; */
+    transform-origin: 0px 0px 0px;
+    transform: scale(1,1);
 }
 #container
 {
-    border:2px solid crimson;
+    border:1px solid crimson;
 }
 #pivot
 {
@@ -17,7 +19,6 @@
 
 html, document, body
 {
-    display: flex;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -31,7 +32,45 @@ html, document, body
     margin: auto;
 }
 
-cp
+.cp
 {
-    
+    border: 1px dashed lightgrey;
+    padding: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 200;
+}
+
+.cp .button
+{
+    border: 1px solid crimson;
+    border-radius: 3px;
+    color: ivory;
+    background-color: lightcoral;
+    padding: 4px;
+    margin: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .cp .button:hover
+    {
+        background-color: rgb(240, 182, 182);
+        color: whitesmoke;
+        border-color: rgb(221, 67, 98);
+    }
+.cp .row
+{
+    width: 100%;
+    display: flex;
+    margin-top: 4px;
+}
+
+.cp .info
+{
+    color: grey;
+    border: 1px solid grey;
+    border-radius: 4px;
+    padding: 2px;
+    margin-right: 2px;
 }
