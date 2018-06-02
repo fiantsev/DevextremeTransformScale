@@ -5,11 +5,11 @@ var delta = Number.parseInt($("#delta").val());
 var pausedState = true;
 var reversedState = false;
 
-function DoScale(){
-    $("#dashboard").css("transform", `scale(${scaleX / 1000},${scaleY / 1000})`);
+function DoScale() {
+    $("#dashboard").css("transform", "scale(" + scaleX / 1000 + "," + scaleY / 1000 + ")");
 };
 
-window.setInterval(()=>{
+window.setInterval(function(){
     if (pausedState) return;
     DoScale();
     UpdateInfo();
@@ -23,10 +23,10 @@ window.setInterval(()=>{
 }, delta);
 
 function UpdateInfo() {
-    $("#scaleInfo").html(`scaleX: ${(scaleX / 10).toFixed(2)}%`);
-    $("#dashboardInfo").html(`dashboardInfo: ${exHW($("#dashboard"))}`);
-    $("#containerInfo").html(`containerInfo: ${exHW($("#container"))}`);
-    $("#pivotInfo").html(`pivotInfo: ${exHW($("#pivot"))}`);
+    // $("#scaleInfo").html(`scaleX: ${(scaleX / 10).toFixed(2)}%`);
+    // $("#dashboardInfo").html(`dashboardInfo: ${exHW($("#dashboard"))}`);
+    // $("#containerInfo").html(`containerInfo: ${exHW($("#container"))}`);
+    // $("#pivotInfo").html(`pivotInfo: ${exHW($("#pivot"))}`);
 }
 UpdateInfo();
 
@@ -37,35 +37,35 @@ function ForceScale() {
     UpdateInfo();
 }
 
-function exHW(element) {
-    var dims = element[0].getBoundingClientRect();
-    var hw = { h: dims.height, w: dims.width };
-    return `(${hw.h.toFixed(2)},${hw.w.toFixed(2)})`;
-}
+// function exHW(element) {
+//     var dims = element[0].getBoundingClientRect();
+//     var hw = { h: dims.height, w: dims.width };
+//     return `(${hw.h.toFixed(2)},${hw.w.toFixed(2)})`;
+// }
 
-$("#startButton").click(() => {
+$("#startButton").click(function(){
     pausedState = false;
 });
 
-$("#stopButton").click(() => {
+$("#stopButton").click(function(){
     pausedState = true;
 });
 
-$("#reverseButton").click(() => {
+$("#reverseButton").click(function(){
     reversedState = !reversedState;
 });
 
-$("#resetButton").click(() => {
+$("#resetButton").click(function(){
     scaleX = scaleXY;
     scaleY = scaleXY;
     delta = 50;
     pausedState = true;
     reversedState = false;
-    $("#dashboard").css("transform", `scale(${scaleX / 1000},${scaleY / 1000})`);
-    window.setTimeout(() => $("#pivot").dxPivotGrid("instance").updateDimensions());
+    // $("#dashboard").css("transform", `scale(${scaleX / 1000},${scaleY / 1000})`);
+    window.setTimeout(function(){$("#pivot").dxPivotGrid("instance").updateDimensions()});
 });
 
-$("#updateDimensionsButton").click(() => {
+$("#updateDimensionsButton").click(function(){
     $("#pivot").dxPivotGrid("instance").updateDimensions();
 });
 //   $("#updateDimensionsButton").click(()=>{pivot.updateDimensions()});

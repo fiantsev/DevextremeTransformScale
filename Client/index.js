@@ -22,7 +22,7 @@ var store = new CustomStore({
     key: "OrderID",
     load: function(opt){
         var d = $.Deferred();
-        var url = `http://${window.location.hostname}:3333/api`;
+        var url = "http://" + window.location.hostname + ":3333/api";
         fetch(url, {method:"POST", body: JSON.stringify(opt)})
             .then((r) => r.json() )
             .then((r) => {
