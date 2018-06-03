@@ -18,6 +18,15 @@ const localization = require('devextreme/localization');
 localization.loadMessages(ruMessages);
 localization.locale("ru");
 
+var DevExtremeIntegration = {};
+DevExtremeIntegration.ApplyDashboardScaleCorrection = function(value){
+    var scaleString = $("#dashboard").css("transform").split("(")[1].split(",")[0].trim();
+    var scale = Number.parseFloat(scaleString);
+    return Math.floor(value / scale);
+}
+window.DevExtremeIntegration = DevExtremeIntegration;
+
+
 var store = new CustomStore({
     key: "OrderID",
     load: function(opt){

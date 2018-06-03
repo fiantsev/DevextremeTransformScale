@@ -57,6 +57,17 @@ function UpdateUI(){
         $("#startButton").hide();
         $("#stopButton").show();
     }
+
+    $("#reverseButton").html("Reverse: " + (reversedState ? "\u21d1" : "\u21d3"));
+    
+    if(reversedState)
+    {
+        
+    }
+    else
+    {
+
+    }
 }
 
 $("#startButton").click(() => {
