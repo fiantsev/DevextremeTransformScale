@@ -5,13 +5,11 @@ var delta = Number.parseInt($("#delta").val());
 var pausedState = true;
 var reversedState = false;
 
-function DoScale(){
-    $("#dashboard").css("transform", `scale(${scaleX / 1000},${scaleY / 1000})`);
-};
 
 window.setInterval(()=>{
+    UpdateUI();
     if (pausedState) return;
-    DoScale();
+    UpdateScale();
     UpdateInfo();
     var step = Number.parseInt($("#step").val());
     if (reversedState) {
@@ -21,6 +19,10 @@ window.setInterval(()=>{
         scaleX -= step; scaleY -= step;
     }
 }, delta);
+
+function UpdateScale(){
+    $("#dashboard").css("transform", `scale(${scaleX / 1000},${scaleY / 1000})`);
+};
 
 function UpdateInfo() {
     $("#scaleInfo").html(`scaleX: ${(scaleX / 10).toFixed(2)}%`);
@@ -33,7 +35,7 @@ UpdateInfo();
 function ForceScale() {
     scaleX = Number.parseInt($("#scale").val());
     scaleY = Number.parseInt($("#scale").val());
-    DoScale();
+    UpdateScale();
     UpdateInfo();
 }
 
@@ -41,6 +43,20 @@ function exHW(element) {
     var dims = element[0].getBoundingClientRect();
     var hw = { h: dims.height, w: dims.width };
     return `(${hw.h.toFixed(2)},${hw.w.toFixed(2)})`;
+}
+
+
+function UpdateUI(){
+    if(pausedState)
+    {
+        $("#startButton").show();
+        $("#stopButton").hide();
+    }
+    else
+    {
+        $("#startButton").hide();
+        $("#stopButton").show();
+    }
 }
 
 $("#startButton").click(() => {
@@ -68,4 +84,3 @@ $("#resetButton").click(() => {
 $("#updateDimensionsButton").click(() => {
     $("#pivot").dxPivotGrid("instance").updateDimensions();
 });
-//   $("#updateDimensionsButton").click(()=>{pivot.updateDimensions()});
