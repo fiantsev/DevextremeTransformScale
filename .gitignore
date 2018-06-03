@@ -1,3 +1,5 @@
 node_modules
-nginx-1.13.6
 Client/bundle.js
+nginx-1.13.6/logs/*
+nginx-1.13.6/docs/*
+nginx-1.13.6/temp
